@@ -37,3 +37,9 @@ Next steps: native mobile client, favourites module, and UX/UI polish.
 | **Database** | MySQL / MariaDB                  | 
 | **Testing**  | PHPUnit & Symfony Test Pack       | 
 | **Dev-ops**  | Docker Compose   | 
+
+## 📸 Screenshots
+
+| Accueil | Tableau de bord admin | Liste des utilisateurs |
+|---------|----------------------|--------------------|
+| ![](docs/screenshots/1.png) | ![](docs/screenshots/2.png) | ![](docs/screenshots/3.png) |
