@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier une Émotion{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h2 class="h4 mb-0">🎭 Modifier une Émotion</h2>
+            </div>
+
+            <div class="card-body">
+                {{ form_start(form) }}
+
+                <div class="mb-3">
+                    {{ form_label(form.nomEmotion, 'Nom de l’émotion', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.nomEmotion, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.emotionBase, 'Émotion de base', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.emotionBase, {'attr': {'class': 'form-select'}}) }}
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <button class="btn btn-success" type="submit">💾 Sauvegarder</button>
+                    <a href="{{ path('app_emotion_index') }}" class="btn btn-outline-secondary">← Retour</a>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+
+            <div class="card-footer text-end">
+                <form method="post" action="{{ path('app_emotion_delete', {'id': emotion.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer cette émotion ?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ emotion.id) }}">
+                    <button class="btn btn-sm btn-outline-danger">🗑 Supprimer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

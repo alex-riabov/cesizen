@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}CesiZen{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="{{ asset('favico2.png') }}">
+
+    <!-- Bootstrap 5 + Google Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        h1, h2, h3 {
+            font-weight: 600;
+        }
+        .navbar {
+            background-color: #ffffff;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .btn {
+            border-radius: 12px;
+        }
+        .card {
+            border-radius: 16px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        .badge {
+            font-size: 0.85rem;
+        }
+        .navbar-profile-link {
+            color: #6c757d;
+            text-decoration: none;
+        }
+        .navbar-profile-link:hover {
+            color: #000;
+            text-decoration: underline;
+        }
+    </style>
+
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light px-3">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="{{ path('app_home') }}">🧘 CesiZen</a>
+
+        <div class="d-flex align-items-center ms-auto gap-2">
+            {% if app.user %}
+                <a href="{{ path('app_profile') }}" class="navbar-profile-link me-2">
+                    👤 {% if app.user.utilisateurInfo %}
+                        {{ app.user.utilisateurInfo.prenomUtilisateur }} {{ app.user.utilisateurInfo.nomUtilisateur }}
+                    {% else %}
+                        {{ app.user.userIdentifier }}
+                    {% endif %}
+                </a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a class="btn btn-sm btn-outline-dark" href="{{ path('app_admin') }}">Admin</a>
+                {% endif %}
+                <a class="btn btn-sm btn-outline-danger" href="{{ path('app_logout') }}">Déconnexion</a>
+            {% else %}
+                <a class="btn btn-sm btn-outline-primary" href="{{ path('app_login') }}">Connexion</a>
+                <a class="btn btn-sm btn-success" href="{{ path('app_register') }}">Créer un compte</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<div class="container py-4">
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success shadow-sm">{{ message }}</div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger shadow-sm">{{ message }}</div>
+    {% endfor %}
+
+    {% block body %}{% endblock %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% block javascripts %}{% endblock %}
+</body>
+</html>

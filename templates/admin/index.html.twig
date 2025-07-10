@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord Admin{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Tableau de bord Admin</h1>
+
+        <p class="lead">Bienvenue, administrateur·rice 👑</p>
+
+        <div class="list-group">
+            <a href="{{ path('app_utilisateur_info_index') }}" class="list-group-item list-group-item-action">
+                👥 Gérer les utilisateurs
+            </a>
+            <a href="{{ path('app_information_index') }}" class="list-group-item list-group-item-action">
+                🧾 Gérer les informations
+            </a>
+            <a href="{{ path('app_emotion_base_index') }}" class="list-group-item list-group-item-action">
+                🧠 Gérer les émotions de base
+            </a>
+            <a href="{{ path('app_emotion_index') }}" class="list-group-item list-group-item-action">
+                🎭 Gérer les émotions
+            </a>
+
+            {# You can add more sections later like: #}
+            {# <a href="{{ path('app_emotion_journal') }}" class="list-group-item list-group-item-action">📘 Journal des émotions</a> #}
+        </div>
+    </div>
+{% endblock %}

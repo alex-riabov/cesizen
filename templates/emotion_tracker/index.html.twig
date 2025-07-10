@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Journal des Émotions{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">🎭 Journal des Émotions</h1>
+
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-6">
+                <div class="list-group shadow-sm">
+                    <a href="{{ path('app_emotion_tracker_new') }}" class="list-group-item list-group-item-action">
+                        ➕ Ajouter une émotion
+                    </a>
+                    <a href="{{ path('app_emotion_tracker_journal') }}" class="list-group-item list-group-item-action">
+                        📘 Consulter mon journal
+                    </a>
+                    <a href="{{ path('app_emotion_tracker_rapport') }}" class="list-group-item list-group-item-action">
+                        📊 Générer un rapport
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {% if emotionLabels is not empty %}
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-center mb-4">Fréquence des émotions</h5>
+                    <canvas id="emotionChart" height="100"></canvas>
+                </div>
+            </div>
+        {% else %}
+            <p class="text-center text-muted">Aucune émotion enregistrée pour le moment.</p>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {% if emotionLabels is not empty %}
+        <script>
+            const ctx = document.getElementById('emotionChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: {{ emotionLabels|json_encode|raw }},
+                    datasets: [{
+                        label: 'Occurrences',
+                        data: {{ emotionValues|json_encode|raw }},
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                        borderRadius: 6,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: ctx => `${ctx.label} : ${ctx.parsed.y} fois`
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { precision: 0 }
+                        }
+                    }
+                }
+            });
+        </script>
+
+    {% endif %}
+{% endblock %}

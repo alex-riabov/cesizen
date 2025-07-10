@@ -1,0 +1,46 @@
+security:
+    password_hashers:
+        App\Entity\Utilisateur: 'auto'
+
+    providers:
+        users_in_db:
+            entity:
+                class: App\Entity\Utilisateur
+                property: email
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            lazy: true
+            provider: users_in_db
+
+            # Support both frontend form login and API login
+            custom_authenticator: App\Security\AppCustomAuthenticator
+           # entry_point: App\Security\LoginEntryPoint
+
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                username_parameter: email
+                password_parameter: password
+                enable_csrf: true
+                default_target_path: app_home
+
+            logout:
+                path: app_logout
+                target: app_home
+
+    access_control:
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/logout, roles: PUBLIC_ACCESS }
+        - { path: ^/register, roles: PUBLIC_ACCESS }
+        - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/admin, roles: ROLE_ADMIN }                      # ⬆ Move admin before catch-all
+        - { path: ^/utilisateur/info, roles: ROLE_ADMIN }          # ⬆ Add explicit access if needed
+        - { path: ^/$, roles: PUBLIC_ACCESS }
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/, roles: ROLE_USER }                           # ⬇ Catch-all LAST
+

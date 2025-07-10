@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion | CesiZen{% endblock %}
+
+{% block body %}
+    <div class="container d-flex justify-content-center align-items-center" style="height: 80vh;">
+        <div class="card shadow-sm p-4" style="min-width: 320px; max-width: 400px;">
+            <h2 class="text-center mb-4">Connexion</h2>
+
+            {% if error %}
+                <div class="alert alert-danger">
+                    Identifiants incorrects. Veuillez réessayer.
+                </div>
+            {% endif %}
+
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
+
+            <form method="post">
+                <div class="mb-3">
+                    <label for="inputEmail" class="form-label">Adresse e-mail</label>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+                </div>
+
+                <div class="mb-3">
+                    <label for="inputPassword" class="form-label">Mot de passe</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control" required>
+                </div>
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <button class="btn btn-primary w-100" type="submit">Se connecter</button>
+            </form>
+
+            <div class="mt-3 text-center">
+                <small>Pas encore de compte ?
+                    <a href="{{ path('app_register') }}">Créer un compte</a>
+                </small>
+            </div>
+        </div>
+    </div>
+{% endblock %}

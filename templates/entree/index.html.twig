@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique des Émotions{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3">
+                <i class="bi bi-journal-text text-primary"></i> Historique des Émotions
+            </h1>
+            <a href="{{ path('app_emotion_tracker_journal') }}" class="btn btn-outline-primary">← Retour au journal</a>
+        </div>
+
+        <table class="table table-hover shadow-sm bg-white rounded">
+            <thead class="table-light">
+            <tr>
+                <th>#</th>
+                <th>Date & Heure</th>
+                <th>Émotion</th>
+                <th>Commentaire</th>
+                <th class="text-end">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entree in entrees %}
+                <tr>
+                    <td>{{ entree.id }}</td>
+                    <td>{{ entree.dateHeureEntree|date('d/m/Y H:i') }}</td>
+                    <td>
+                        <span class="badge bg-info text-dark">{{ entree.emotion.nomEmotion }}</span>
+                    </td>
+                    <td>
+                        <em>{{ entree.commentaire|default('—') }}</em>
+                    </td>
+                    <td class="text-end">
+                        <a href="{{ path('app_entree_edit', {'id': entree.id}) }}" class="btn btn-sm btn-outline-primary">✏ Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5" class="text-center text-muted py-4">Aucune entrée enregistrée pour le moment.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

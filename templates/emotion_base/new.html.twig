@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New EmotionBase{% endblock %}
+
+{% block body %}
+    <h1>Create new EmotionBase</h1>
+
+    {{ include('emotion_base/_form.html.twig') }}
+
+    <a href="{{ path('app_emotion_base_index') }}">back to list</a>
+{% endblock %}

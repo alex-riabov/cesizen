@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Émotions{% endblock %}
+
+{% block body %}
+    <h1 class="mb-4">Liste des émotions</h1>
+
+    <table class="table table-bordered table-striped align-middle">
+        <thead class="table-light">
+        <tr>
+            <th>ID</th>
+            <th>Nom de l’émotion</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for emotion in emotions %}
+            <tr>
+                <td>{{ emotion.id }}</td>
+                <td>{{ emotion.nomEmotion }}</td>
+                <td>
+                    <a href="{{ path('app_emotion_show', {'id': emotion.id}) }}" class="btn btn-sm btn-outline-primary me-1">Voir</a>
+                    <a href="{{ path('app_emotion_edit', {'id': emotion.id}) }}" class="btn btn-sm btn-outline-secondary">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3" class="text-center">Aucune émotion trouvée.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_emotion_new') }}" class="btn btn-success">Ajouter une émotion</a>
+{% endblock %}

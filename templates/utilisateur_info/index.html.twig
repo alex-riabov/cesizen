@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Liste des utilisateurs</h1>
+
+        <table class="table table-bordered table-hover table-striped align-middle text-center">
+            <thead class="table-dark">
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Date de naissance</th>
+                <th>Email</th>
+                <th>Rôle</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for utilisateur_info in utilisateur_infos %}
+                <tr>
+                    <td>{{ utilisateur_info.id }}</td>
+                    <td>{{ utilisateur_info.nomUtilisateur }}</td>
+                    <td>{{ utilisateur_info.prenomUtilisateur }}</td>
+                    <td>{{ utilisateur_info.dateNaissanceUtilisateur ? utilisateur_info.dateNaissanceUtilisateur|date('Y-m-d') : '' }}</td>
+                    <td>{{ utilisateur_info.utilisateur.email }}</td>
+                    <td>
+                        {% if 'ROLE_ADMIN' in utilisateur_info.utilisateur.roles %}
+                            <span class="badge bg-danger">Administrateur</span>
+                        {% else %}
+                            <span class="badge bg-primary">Utilisateur</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('app_utilisateur_info_show', {'id': utilisateur_info.id}) }}" class="btn btn-sm btn-outline-info">Voir</a>
+                        <a href="{{ path('app_utilisateur_info_edit', {'id': utilisateur_info.id}) }}" class="btn btn-sm btn-outline-secondary">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">Aucun utilisateur trouvé.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_utilisateur_info_new') }}" class="btn btn-success">Créer un utilisateur</a>
+    </div>
+{% endblock %}

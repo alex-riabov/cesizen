@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Informations{% endblock %}
+
+{% block body %}
+    <h1 class="mb-4">Liste des informations</h1>
+
+    <table class="table table-bordered table-striped align-middle">
+        <thead class="table-light">
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Date & Heure</th>
+            <th>Contenu</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in information %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.nomInformation }}</td>
+                <td>{{ item.dateHeureInformation ? item.dateHeureInformation|date('Y-m-d H:i') : '' }}</td>
+                <td>{{ item.contenuInformation|u.truncate(100, '…') }}</td>
+                <td>
+                    <a href="{{ path('app_information_show', {'id': item.id}) }}" class="btn btn-sm btn-outline-primary me-1">Voir</a>
+                    <a href="{{ path('app_information_edit', {'id': item.id}) }}" class="btn btn-sm btn-outline-secondary">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5" class="text-center">Aucune information trouvée.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_information_new') }}" class="btn btn-success">Créer une information</a>
+{% endblock %}

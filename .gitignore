@@ -1,0 +1,51 @@
+#############################
+#  Symfony / PHP projects   #
+#############################
+
+# Dependency directories
+/vendor/
+/node_modules/
+
+# Build & cache
+/var/
+/public/build/
+
+# IDE / editor settings
+/.idea/
+/.vscode/
+
+# Composer artifacts
+/composer.lock
+/phpunit.xml
+/.phpunit.result.cache
+/coverage/
+
+# Logs & profiling
+*.log
+*.cache
+
+#############################
+#   Environment variables   #
+#############################
+
+# Ignore every environment-specific file…
+.env
+.env.*
+# …but keep template examples under version control:
+!.env.dist
+!.env.example
+
+#############################
+#   Docker & local data     #
+#############################
+
+/docker/db-data/
+/docker/*.env
+
+#############################
+#   OS-generated cruft      #
+#############################
+
+.DS_Store
+Thumbs.db
+Icon?

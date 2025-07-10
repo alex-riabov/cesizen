@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un compte{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+        <div class="card shadow-sm p-4" style="min-width: 350px; max-width: 500px; width: 100%;">
+            <h2 class="mb-4 text-center">Créer un compte</h2>
+
+            {% if app.user %}
+                <div class="alert alert-info text-center">
+                    Vous êtes déjà connecté en tant que {{ app.user.userIdentifier }}.
+                    <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                </div>
+            {% endif %}
+
+            {{ form_start(registrationForm) }}
+
+            <div class="form-floating mb-3">
+                {{ form_widget(registrationForm.prenom, {'attr': {'class': 'form-control', 'placeholder': 'Prénom'}}) }}
+                <label for="{{ registrationForm.prenom.vars.id }}">Prénom</label>
+                {{ form_errors(registrationForm.prenom) }}
+            </div>
+
+            <div class="form-floating mb-3">
+                {{ form_widget(registrationForm.nom, {'attr': {'class': 'form-control', 'placeholder': 'Nom'}}) }}
+                <label for="{{ registrationForm.nom.vars.id }}">Nom</label>
+                {{ form_errors(registrationForm.nom) }}
+            </div>
+
+            <div class="form-floating mb-3">
+                {{ form_widget(registrationForm.birthday, {'attr': {'class': 'form-control'}}) }}
+                <label for="{{ registrationForm.birthday.vars.id }}">Date de naissance</label>
+                {{ form_errors(registrationForm.birthday) }}
+            </div>
+
+            <div class="form-floating mb-3">
+                {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
+                <label for="{{ registrationForm.email.vars.id }}">Adresse email</label>
+                {{ form_errors(registrationForm.email) }}
+            </div>
+
+            <div class="form-floating mb-3">
+                {{ form_widget(registrationForm.password, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
+                <label for="{{ registrationForm.password.vars.id }}">Mot de passe</label>
+                {{ form_errors(registrationForm.password) }}
+            </div>
+
+            <div class="d-grid">
+                {{ form_widget(registrationForm.submit, {'attr': {'class': 'btn btn-success btn-lg'}}) }}
+            </div>
+
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+{% endblock %}

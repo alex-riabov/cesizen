@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue sur CesiZen{% endblock %}
+
+{% block body %}
+    <div class="text-center mt-5">
+        <div class="text-center my-4">
+            <img src="{{ asset('favico2.png') }}" alt="Logo CesiZen" style="max-width: 300px; height: auto;">
+        </div>
+        <h1 class="mb-3">
+            Bienvenue
+            {% if app.user and app.user.utilisateurInfo %}
+                {{ app.user.utilisateurInfo.prenomUtilisateur }} {{ app.user.utilisateurInfo.nomUtilisateur }} !
+            {% elseif app.user %}
+                {{ app.user.userIdentifier }} !
+            {% else %}
+                sur <strong>CesiZen</strong>
+            {% endif %}
+        </h1>
+
+        <p class="lead">
+            Une plateforme pour suivre vos émotions et mieux comprendre votre bien-être.
+        </p>
+
+        {% if app.user %}
+            <a href="{{ path('app_emotion_tracker_index') }}" class="btn btn-primary mt-4">
+                🎭 Accéder au tracker d’émotions
+            </a>
+        {% endif %}
+    </div>
+
+    <section class="mt-5">
+        <h2 class="mb-4 text-center">Dernières Informations</h2>
+        <div class="row">
+            {% for info in informations %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ info.nomInformation }}</h5>
+                            <p class="card-text">
+                                {{ info.contenuInformation[:150] ~ (info.contenuInformation|length > 150 ? '...' : '') }}
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Publié le {{ info.dateHeureInformation|date('d/m/Y H:i') }}</small>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12">
+                    <p class="text-muted text-center">Aucune information pour le moment.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

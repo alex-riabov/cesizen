@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle entrée émotionnelle{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card shadow p-4 mx-auto" style="max-width: 600px;">
+            <h2 class="mb-4 text-center text-primary">Ajouter une émotion</h2>
+
+            {{ form_start(form) }}
+
+            <div class="mb-3">
+                {{ form_label(form.emotion, 'Émotion ressentie') }}
+                {{ form_widget(form.emotion, {'attr': {'class': 'form-select'}}) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.commentaire, 'Commentaire (optionnel)') }}
+                {{ form_widget(form.commentaire, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="text-center">
+                <button class="btn btn-success px-4">Ajouter</button>
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

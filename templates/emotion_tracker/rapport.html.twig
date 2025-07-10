@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}📊 Rapport Émotionnel{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h2 class="mb-4">📊 Générer un Rapport d’Émotions</h2>
+
+        {{ form_start(form) }}
+        <div class="row g-3 align-items-end">
+            <div class="col-md-5">
+                {{ form_row(form.startDate) }}
+            </div>
+            <div class="col-md-5">
+                {{ form_row(form.endDate) }}
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary w-100">Générer</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+
+        {% if data %}
+            <hr class="my-4">
+
+            <h4>📅 Période : {{ data.start|date('d/m/Y') }} → {{ data.end|date('d/m/Y') }}</h4>
+            <p><strong>Total d’entrées :</strong> {{ data.count }}</p>
+
+            {% if data.count > 0 %}
+                <p><strong>Émotion la plus fréquente :</strong> {{ data.topEmotion }}</p>
+
+                <h5 class="mt-4">Répartition des émotions :</h5>
+                <ul class="list-group">
+                    {% for emotion, count in data.emotions %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ emotion }}
+                            <span class="badge bg-secondary rounded-pill">{{ count }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">Aucune entrée pour cette période.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}

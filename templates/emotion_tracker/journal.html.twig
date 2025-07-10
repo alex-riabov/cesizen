@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Journal d’Émotions{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="mb-4"><span class="me-2">📘</span> Mon Journal d’Émotions</h1>
+
+        {% if entries is empty %}
+            <p class="text-muted">Aucune entrée pour le moment.</p>
+        {% else %}
+            <div class="list-group">
+                {% for entry in entries %}
+                    <div class="list-group-item">
+                        <h5 class="mb-1">
+                            <strong>{{ entry.emotion.nomEmotion }}</strong>
+                            {% if entry.commentaire %}
+                                – <em>{{ entry.commentaire }}</em>
+                            {% endif %}
+                        </h5>
+                        <p class="card-text">
+                            <small class="text-muted">Ajouté le {{ entry.dateHeureEntree|date('d/m/Y H:i') }}</small>
+                        </p>
+                        <div>
+                            <a href="{{ path('app_entree_edit', {'id': entry.id}) }}" class="btn btn-outline-primary btn-sm me-2">Modifier</a>
+
+                            <form method="post" action="{{ path('app_entree_delete', {'id': entry.id}) }}" style="display: inline-block;" onsubmit="return confirm('Voulez-vous vraiment supprimer cette entrée ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ entry.id) }}">
+                                <button class="btn btn-outline-danger btn-sm">Supprimer</button>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
